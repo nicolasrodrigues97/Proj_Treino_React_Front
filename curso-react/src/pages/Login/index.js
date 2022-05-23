@@ -1,17 +1,64 @@
-import React from 'react';
-import './styles.css'
+import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function Login(){
-    return(
-        <div className="login container">
+import api from '../../services/api';
+
+import './styles.css';
+
+export default function Login() {
+
+    const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+
+    const history = useNavigate();
+
+    async function login(e) {
+        e.preventDefault();
+
+        const data = {
+            userName,
+            password,
+        };
+
+        try {
+            const response = await api.post('api/auth/v1/signin', data);
+
+            localStorage.setItem('userName', userName);
+            localStorage.setItem('accessToken', response.data.accessToken);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
+
+            history.push('/books');
+        } catch (error) {
+            alert('Login failed! Try again!');
+        }
+
+    }
+
+    return (
+        <div className="login-container">
             <section className="form">
-                <form>
+                <form onSubmit={login}>
                     <h1>Login de usuário</h1>
-                    <input placeholder="Username" />
-                    <input type="password" placeholder="Password" />
+
+                    <input
+                        placeholder="Username"
+                        value={userName}
+                        onChange={e => setUserName(e.target.value)}
+                    />
+
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
+
                     <button className="button" type="submit">Login</button>
                 </form>
+
             </section>
+
         </div>
     )
+
 }
