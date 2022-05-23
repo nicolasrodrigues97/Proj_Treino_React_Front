@@ -1,0 +1,102 @@
+# Revisão Javascript
+
+Operações em Javascript durante uma atribuição são lidas da ESQUERDA para DIREITA. Exemplo:
+let value = 4 + 10 + "Nicolas"
+{value}							// resulta em: 14Nicolas   (soma 4 e 10 primeiro, concatena o integer como string no outro string)
+let value = "Nicolas" + 9 + 10
+{value}							// resulta em: Nicolas910 (concatena o string nicolas com 9 como se fosse um string e em seguida, 10 como string)
+
+let x = 10;
+x += 5;			equivale a: x = x+5;	pode ser usado para concatenar strings
+
+let x = 1		não pode redeclarar, escopo em bloco
+var x = 1		pode redeclarar, escopo global
+
+const x = 1		não pode redeclarar, DEVE ser atribuído um valor pós-declaração, escopo em bloco
+				usos: declarar arrays, objetos, funções e exp. regulares
+
+exemplos:
+
+const nomes = ["Nicolas", "João", "Maria"];
+nomes[0] = "Pedro";
+nomes.push("Rodrigo");
+nomes.pop();                  	// remove o último elemento do array
+nomes.shift();					// remove o primeiro elemento do array
+nomes.join(" * ");				// converte array pra string, pode especificar os elementos do array
+for ...
+	nomes.splice				//
+
+# Revisão NodeJS
+
+console.log(nomeDaVar);			// printa a variável no console
+alert(nomeDaVar); ou alert(""); // printa uma var ou um string em forma de caixa de alerta do web browser
+
+dentro de um bloco de método de render(), chame assim para printar a variável num bloco DENTRO DE UM DIV:
+{this.nomeDaVar}				// variável declarada globalmente, fora do bloco
+ou
+{nomeDaVar}						// variável declarada DENTRO do bloco, como const
+
+declaramos um bloco com um objeto e seus componentes:
+const var1 = {
+	key1: "chave 1";
+	key2: "chave 2";
+}
+depois disso, temos
+{var1.key1}						// chama o componente key1 do objeto var1
+
+Components:
+criamos uma classe separada para um componente que vai ser chamado em um bloco de código JSX:
+
+import React from 'react'
+export const Componente1 = props => (
+	<div>
+		Componente1
+	</div>
+)
+export default Componente1;
+
+para charmar-lo no bloco de código, usamos:
+<Component1 />
+
+Props: as propriedades de um determinado componente JSX
+podem ser acessadas usando:
+{props.nomeDaPropriedade} 		// dentro do <div></div> da classe do component1
+
+Containers:
+podem ser acessados usando:
+{this.props.nomeDaPropriedade}  // dentro do <div></div> da classe do container1
+
+State em React
+
+dados temporários: login status, em qual página o usuário está no momento, se uma caixa de diálogo está aberta ou não
+dados não temporários: posts, comentários, dados do perfil etc...
+
+método para mudar estado:
+setState()
+
+obs: 	- não mude o estado diretamente.  (ex: usando um método para dar um valor novo diretamente)
+		- mude o estado referenciando o estado anterior
+		- react não liga se vc não setar as outras propriedades quando mudar o estado, ele mescla as propriedades
+		antigas com as novas que foram alteradas
+
+passando estado para outro componente como um prop:
+depois de importar o componente no container desejado,
+
+condicionais em react:
+recomendado: expressão ternária
+
+{condicao ? blocoDeCodigo if true : blocoDeCodigo if false}
+
+Redux:
+
+ferramenta para trabalhar com estados em react
+
+- Actions -> objeto javascript, tem propriedade de um tipo: string (que descreve como a ação vai atualizar o estado)
+          -> é passada para o redux com a função dispatch (manda ela para o reducer)
+
+		  - Action creators -> funções que retornam Operações
+		  					-> método de dispatch de ações
+- Reducers  -> switch case
+			-> o número de cases deve ser o mesmo do número de ações
+			-> verifica um case com uma ação que bate com ele
+			
